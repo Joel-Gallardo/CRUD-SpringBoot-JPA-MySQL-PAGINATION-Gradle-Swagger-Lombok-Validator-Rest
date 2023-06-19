@@ -3,9 +3,6 @@ plugins {
 	id 'org.springframework.boot' version '3.1.0'
 	id 'io.spring.dependency-management' version '1.1.0'
 
-	id "io.swagger.core.v3.swagger-gradle-plugin" version "2.2.12"
-
-
 }
 
 group = 'com.joel'
@@ -19,20 +16,25 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'com.mysql:mysql-connector-j:8.0.32'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	//Add Lombok
 	compileOnly 'org.projectlombok:lombok:1.18.28'
 	annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
 	testCompileOnly 'org.projectlombok:lombok:1.18.28'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 
-	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
-	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.0.2'
+	//Add Swagger
+	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.1.0'
 
-}
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.1.0'
 
-tasks.named('test') {
-	useJUnitPlatform()
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
 }

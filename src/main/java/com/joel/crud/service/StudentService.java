@@ -27,6 +27,10 @@ public class StudentService {
         return iStudentRepository.findAll(enablePagination ? PageRequest.of(page, size) : Pageable.unpaged());
     }
 
+    public Optional<Student> findById(Long id) {
+        return iStudentRepository.findById(id);
+    }
+
     public void deleteStudent(Long id){
         iStudentRepository.deleteById(id);
     }

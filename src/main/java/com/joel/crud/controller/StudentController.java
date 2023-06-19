@@ -2,13 +2,14 @@ package com.joel.crud.controller;
 
 import com.joel.crud.model.Student;
 import com.joel.crud.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
@@ -17,9 +18,9 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @PostMapping(value = "/{student}")
-    public ResponseEntity<Student> saveStudent(@RequestBody Student student){
-    return ResponseEntity.ok(studentService.saveStudent(student));
+    @PostMapping
+    public ResponseEntity<Student> saveStudent(@Valid @RequestBody Student student){
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.saveStudent(student));
     }
 
     @GetMapping
@@ -36,8 +37,13 @@ public class StudentController {
          ResponseEntity.ok(studentService.existById(id));
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Optional<Student>> findStudentById(@PathVariable ("id") Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(studentService.findById(id));
+    }
+
     @PutMapping
-    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
-        return null;
+    public ResponseEntity<Student> editStudent(@Valid @RequestBody Student student) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.editStudent(student));
     }
 }
